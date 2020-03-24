@@ -1,5 +1,8 @@
 from math import floor
 
+global initial_mass
+initial_mass = 0
+
 mass_list = (
     113348,
     85199,
@@ -105,11 +108,16 @@ mass_list = (
 
 
 def calculate_required(mass: int) -> int:
-    return (floor(mass / 3)) - 2
+    total_required = mass // 3 - 2
+    if total_required <= 0:
+        return 0
+    else:
+        return total_required + calculate_required(total_required)
 
 
 def calc_total_fuel() -> int:
     total_fuel = 0
     for mass in mass_list:
         total_fuel += calculate_required(mass)
+
     return total_fuel
